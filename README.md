@@ -5,8 +5,11 @@
 
 # 학습 자료 
 
-1. StyleSheet API
+1. StyleSheet API  JS언어로 만든 스타일 객체를 네이티브 모듈 쪽으로 한꺼번에 전달/ 효율적    
 https://reactnative.dev/docs/stylesheet
+
+2. faker.js 가짜 데이터 생성 패키지  
+https://www.npmjs.com/package/faker
 
 # error 모음
 
