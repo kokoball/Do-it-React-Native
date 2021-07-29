@@ -5,6 +5,9 @@
 
 # 학습 자료 
 
+1. StyleSheet API
+https://reactnative.dev/docs/stylesheet
+
 # error 모음
 
 
