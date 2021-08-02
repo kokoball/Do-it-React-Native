@@ -12,6 +12,8 @@ https://reactnative.dev/docs/stylesheet
 https://www.npmjs.com/package/faker
 
 # error 모음
+1. No space between hexadecimal literal and identifier  
+StyleSheet Color.grey500) 문제 => color 설정 부분 삭제
 
 
 # 참고 사이트
