@@ -15,6 +15,9 @@ https://www.npmjs.com/package/faker
 1. No space between hexadecimal literal and identifier  
 StyleSheet Color.grey500) 문제 => color 설정 부분 삭제
 
+2. npm 설치 오류 (unable to resolve dependency tree) npm ERR! ERESOLVE  (styled-components)  
+https://iancoding.tistory.com/154   //   --save --legacy-peer-deps  추가하기
+
 
 # 참고 사이트
   
