@@ -11,6 +11,9 @@ https://reactnative.dev/docs/stylesheet
 2. faker.js 가짜 데이터 생성 패키지  
 https://www.npmjs.com/package/faker
 
+3. React Hook  
+https://ko.reactjs.org/docs/hooks-intro.html
+
 # error 모음
 1. No space between hexadecimal literal and identifier  
 StyleSheet Color.grey500) 문제 => color 설정 부분 삭제
