@@ -23,11 +23,11 @@ export const ToggleThemeProvider: FC<ToggleThemeContextProps> = ({
 
 export const useToggleTheme = () => {
   const value = useContext(ToggleThemeContext)
-  return value
+  return values
 }
 */
 // 최종 모습
-import React, {createContext, useContext} from 'react'
+import React, { createContext, useContext } from 'react';
 import type {FC} from 'react'
 
 export type ToggleThemeContextType = {

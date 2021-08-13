@@ -1,113 +1,42 @@
-// 초기 버전
 import React from 'react'
-import {createStackNavigator} from '@react-navigation/stack'
-import Home from './Home'
-import HomeLeft from './HomeLeft'
-import HomeRight from './HomeRight'
-
-const Stack = createStackNavigator()
-
-export default function MainNavigator() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="HomeLeft" component={HomeLeft} />
-      <Stack.Screen name="HomeRight" component={HomeRight} />
-    </Stack.Navigator>
-  )
-}
-// Stack.Navigator에 screenOptions 설정
-/*
-import React from 'react'
-import {createStackNavigator} from '@react-navigation/stack'
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import {Colors} from 'react-native-paper'
-import Home from './Home'
-import HomeLeft from './HomeLeft'
-import HomeRight from './HomeRight'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import Login from './Login'
+import SignUp from './SignUp'
+import HomeNavigator from './HomeNavigator'
+import type {RouteProp, ParamListBase} from '@react-navigation/native'
 
-const Stack = createStackNavigator()
-
-export default function MainNavigator() {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: Colors.pink500
-        },
-        headerTintColor: 'white',
-        headerTitleStyle: {
-          fontWeight: 'bold'
-        }
-      }}>
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="HomeLeft" component={HomeLeft} />
-      <Stack.Screen name="HomeRight" component={HomeRight} />
-    </Stack.Navigator>
-  )
+type TabBarIconProps = {focused: boolean; color: string; size: number}
+const icons: Record<string, string[]> = {
+  HomeNavigator: ['home-circle', 'home-circle-outline'],
+  Login: ['account-search', 'account-search-outline'],
+  SignUp: ['account-clock', 'account-clock-outline']
 }
-*/
-// 헤더가 보이지 않도록 설정
-/*
-import React from 'react'
-import {createStackNavigator} from '@react-navigation/stack'
-import Home from './Home'
-import HomeLeft from './HomeLeft'
-import HomeRight from './HomeRight'
-
-const Stack = createStackNavigator()
-
-export default function MainNavigator() {
-  return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="HomeLeft" component={HomeLeft} />
-      <Stack.Screen name="HomeRight" component={HomeRight} />
-    </Stack.Navigator>
-  )
+const screenOptions = ({route}: {route: RouteProp<ParamListBase, string>}) => {
+  return {
+    tabBarIcon: ({focused, color, size}: TabBarIconProps) => {
+      const {name} = route
+      const focusedSize = focused ? size + 6 : size
+      const focusedColor = focused ? Colors.lightBlue500 : color
+      const [icon, iconOutline] = icons[name]
+      const iconName = focused ? icon : iconOutline
+      return <Icon name={iconName} size={focusedSize} color={focusedColor} />
+    }
+  }
 }
-*/
-// 최종 버전
-/*
-import React, {useMemo} from 'react'
-import {createStackNavigator} from '@react-navigation/stack'
-import type {StackNavigationOptions} from '@react-navigation/stack'
-import {useNavigationHorizontalInterpolator} from '../hooks'
-import Home from './Home'
-import HomeLeft from './HomeLeft'
-import HomeRight from './HomeRight'
-
-const Stack = createStackNavigator()
+const Tab = createBottomTabNavigator()
 
 export default function MainNavigator() {
-  const interpolator = useNavigationHorizontalInterpolator()
-  const leftOptions = useMemo<StackNavigationOptions>(
-    () => ({
-      gestureDirection: 'horizontal-inverted',
-      cardStyleInterpolator: interpolator
-    }),
-    []
-  )
-  const rightOptions = useMemo<StackNavigationOptions>(
-    () => ({
-      gestureDirection: 'horizontal',
-      cardStyleInterpolator: interpolator
-    }),
-    []
-  )
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen
-        name="HomeLeft"
-        component={HomeLeft}
-        options={leftOptions}
+    <Tab.Navigator screenOptions={screenOptions}>
+      <Tab.Screen name="Login" component={Login} />
+      <Tab.Screen name="SignUp" component={SignUp} />
+      <Tab.Screen
+        name="HomeNavigator"
+        component={HomeNavigator}
+        options={{tabBarLabel: 'Home', tabBarBadge: 3}} // 배지 옵션
       />
-      <Stack.Screen
-        name="HomeRight"
-        component={HomeRight}
-        options={rightOptions}
-      />
-    </Stack.Navigator>
+    </Tab.Navigator>
   )
 }
-*/

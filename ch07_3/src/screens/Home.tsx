@@ -1,138 +1,9 @@
-// 초기 버전
-import React, {useState, useCallback, useEffect} from 'react'
-import {StyleSheet, FlatList} from 'react-native'
-import {SafeAreaView, View, UnderlineText, TopBar} from '../theme/navigation'
-import {ScrollEnabledProvider, useScrollEnabled} from '../contexts'
-import * as D from '../data'
-import Person from './Person'
-
-export default function People() {
-  const [scrollEnabled] = useScrollEnabled()
-  const [people, setPeople] = useState<D.IPerson[]>([])
-
-  const addPerson = useCallback(() => {
-    setPeople(people => [D.createRandomPerson(), ...people])
-  }, [])
-  const removeAllPersons = useCallback(() => {
-    setPeople(notUsed => [])
-  }, [])
-  const deletePerson = useCallback(
-    (id: string) => () =>
-      setPeople(people => people.filter(person => person.id != id)),
-    []
-  )
-  useEffect(() => D.makeArray(5).forEach(addPerson), [])
-
-  return (
-    <SafeAreaView>
-      <ScrollEnabledProvider>
-        <View style={[styles.view]}>
-          <TopBar>
-            <UnderlineText onPress={addPerson} style={styles.text}>
-              add
-            </UnderlineText>
-            <UnderlineText onPress={removeAllPersons} style={styles.text}>
-              remove all
-            </UnderlineText>
-          </TopBar>
-          <FlatList
-            scrollEnabled={scrollEnabled}
-            data={people}
-            renderItem={({item}) => (
-              <Person person={item} deletePressed={deletePerson(item.id)} />
-            )}
-            keyExtractor={item => item.id}
-          />
-        </View>
-      </ScrollEnabledProvider>
-    </SafeAreaView>
-  )
-}
-const styles = StyleSheet.create({
-  view: {flex: 1},
-  text: {marginRight: 10, fontSize: 20}
-})
-// 중간 버전
-/*
-import React, {useState, useCallback, useEffect} from 'react'
-import {StyleSheet, FlatList} from 'react-native'
-import {useNavigation} from '@react-navigation/native'
-// prettier-ignore
-import {SafeAreaView, View, UnderlineText, Text, TopBar}
-from '../theme/navigation'
-import {ScrollEnabledProvider, useScrollEnabled} from '../contexts'
-import * as D from '../data'
-import Person from './Person'
-
-export default function People() {
-  // navigation
-  const navigation = useNavigation()
-  const goLeft = useCallback(() => navigation.navigate('HomeLeft'), [])
-  const goRight = useCallback(
-    () => navigation.navigate('HomeRight', {name: 'Jack', age: 32}),
-    []
-  )
-  // for people
-  const [scrollEnabled] = useScrollEnabled()
-  const [people, setPeople] = useState<D.IPerson[]>([])
-  const addPerson = useCallback(() => {
-    setPeople(people => [D.createRandomPerson(), ...people])
-  }, [])
-  const removeAllPersons = useCallback(() => {
-    setPeople(notUsed => [])
-  }, [])
-  const deletePerson = useCallback(
-    (id: string) => () =>
-      setPeople(people => people.filter(person => person.id != id)),
-    []
-  )
-  useEffect(() => D.makeArray(5).forEach(addPerson), [])
-
-  return (
-    <SafeAreaView>
-      <ScrollEnabledProvider>
-        <View style={[styles.view]}>
-          <TopBar>
-            <UnderlineText onPress={goLeft} style={styles.text}>
-              go Left
-            </UnderlineText>
-            <UnderlineText onPress={goRight} style={styles.text}>
-              go Right
-            </UnderlineText>
-          </TopBar>
-          <TopBar noSwitch>
-            <UnderlineText onPress={addPerson} style={styles.text}>
-              add
-            </UnderlineText>
-            <UnderlineText onPress={removeAllPersons} style={styles.text}>
-              remove all
-            </UnderlineText>
-          </TopBar>
-          <FlatList
-            scrollEnabled={scrollEnabled}
-            data={people}
-            renderItem={({item}) => (
-              <Person person={item} deletePressed={deletePerson(item.id)} />
-            )}
-            keyExtractor={item => item.id}
-          />
-        </View>
-      </ScrollEnabledProvider>
-    </SafeAreaView>
-  )
-}
-const styles = StyleSheet.create({
-  view: {flex: 1},
-  text: {marginRight: 10, fontSize: 20}
-})
-*/
-// 최종 버전
-/*
 import React, {useState, useCallback, useEffect, useRef} from 'react'
 import {StyleSheet, FlatList} from 'react-native'
 import {useNavigation} from '@react-navigation/native'
 // prettier-ignore
-import {SafeAreaView, View, UnderlineText,TopBar} from '../theme/navigation'
+import {SafeAreaView, View, UnderlineText,TopBar,
+NavigationHeader, MaterialCommunityIcon as Icon} from '../theme'
 import {ScrollEnabledProvider, useScrollEnabled} from '../contexts'
 import * as D from '../data'
 import Person from './Person'
@@ -147,6 +18,9 @@ export default function Home() {
     () => navigation.navigate('HomeRight', {name: 'Jack', age: 32}),
     []
   )
+  const logout = useCallback(() => {
+    navigation.navigate('Login')
+  }, [])
   // for people
   const [scrollEnabled] = useScrollEnabled()
   const [people, setPeople] = useState<D.IPerson[]>([])
@@ -173,14 +47,10 @@ export default function Home() {
     <SafeAreaView>
       <ScrollEnabledProvider>
         <View style={[styles.view]}>
-          <TopBar>
-            <UnderlineText onPress={goLeft} style={styles.text}>
-              go Left
-            </UnderlineText>
-            <UnderlineText onPress={goRight} style={styles.text}>
-              go Right
-            </UnderlineText>
-          </TopBar>
+          <NavigationHeader
+            title="Home"
+            Right={() => <Icon name="logout" size={30} onPress={logout} />}
+          />
           <TopBar noSwitch>
             <UnderlineText onPress={addPerson} style={styles.text}>
               add
@@ -214,4 +84,3 @@ const styles = StyleSheet.create({
   view: {flex: 1},
   text: {marginRight: 10, fontSize: 20}
 })
-*/

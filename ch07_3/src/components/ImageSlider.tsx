@@ -1,12 +1,12 @@
-import React, {useRef, useMemo, useCallback} from 'react'
-import type {FC} from 'react'
-import {StyleSheet, FlatList, Image, View, Animated} from 'react-native'
-import type {NativeSyntheticEvent, NativeScrollEvent} from 'react-native'
-import {Colors} from 'react-native-paper'
-import {TouchableView} from './TouchableView'
+import React, { useRef, useMemo, useCallback } from 'react'
+import type { FC } from 'react'
+import { StyleSheet, FlatList, Image, View, Animated } from 'react-native'
+import type { NativeSyntheticEvent, NativeScrollEvent } from 'react-native'
+import { Colors } from 'react-native-paper'
+import { TouchableView } from './TouchableView'
 // prettier-ignore
-import {useAnimatedValue, useMonitorAnimatedValue, useTransformStyle}
-from '../hooks'
+import { useAnimatedValue, useMonitorAnimatedValue, useTransformStyle }
+  from '../hooks'
 
 export type ImageSliderProps = {
   imageUrls: string[]
@@ -29,7 +29,7 @@ export const ImageSlider: FC<ImageSliderProps> = ({
   const onScroll = useCallback(
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
       if (imageWidth == 0) return
-      const {contentOffset} = event.nativeEvent
+      const { contentOffset } = event.nativeEvent
       const index = Math.round(contentOffset.x / imageWidth)
       selectedIndexAnimValue.setValue(index)
     },
@@ -38,7 +38,7 @@ export const ImageSlider: FC<ImageSliderProps> = ({
   const selectImage = useCallback(
     (index: number) => () => {
       selectedIndexAnimValue.setValue(index)
-      flatListRef.current?.scrollToIndex({index})
+      flatListRef.current?.scrollToIndex({ index })
     },
     []
   )
@@ -61,8 +61,8 @@ export const ImageSlider: FC<ImageSliderProps> = ({
             }
           ]}>
           <Image
-            source={{uri}}
-            style={{width: thumbnailSize, height: thumbnailSize}}
+            source={{ uri }}
+            style={{ width: thumbnailSize, height: thumbnailSize }}
           />
         </TouchableView>
       )),
@@ -82,20 +82,20 @@ export const ImageSlider: FC<ImageSliderProps> = ({
         scrollEnabled={true}
         pagingEnabled={true}
         onScroll={onScroll}
-        contentContainerStyle={{width: imageUrls.length * imageWidth}}
+        contentContainerStyle={{ width: imageUrls.length * imageWidth }}
         showsHorizontalScrollIndicator={false}
         horizontal={true}
         data={imageUrls}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <Image
-            style={[styles.image, {width: imageWidth}]}
-            source={{uri: item}}
+            style={[styles.image, { width: imageWidth }]}
+            source={{ uri: item }}
           />
         )}
         keyExtractor={(item, index) => index.toString()}
       />
-      <View style={[styles.iconBar, {justifyContent: 'center'}]}>
-        <View style={{flexDirection: 'row'}}>
+      <View style={[styles.iconBar, { justifyContent: 'center' }]}>
+        <View style={{ flexDirection: 'row' }}>
           {circles}
           <Animated.View
             style={[styles.circle, styles.selectedCircle, translateX]}
@@ -103,7 +103,7 @@ export const ImageSlider: FC<ImageSliderProps> = ({
         </View>
       </View>
       {showThumbnails && (
-        <View style={[styles.iconBar, {justifyContent: 'space-between'}]}>
+        <View style={[styles.iconBar, { justifyContent: 'space-between' }]}>
           {thumbnails}
         </View>
       )}
@@ -112,9 +112,9 @@ export const ImageSlider: FC<ImageSliderProps> = ({
 }
 
 const styles = StyleSheet.create({
-  image: {height: 150, resizeMode: 'cover'},
-  iconBar: {flexDirection: 'row', padding: 5},
-  thumbnail: {borderWidth: 1, padding: 2},
+  image: { height: 150, resizeMode: 'cover' },
+  iconBar: { flexDirection: 'row', padding: 5 },
+  thumbnail: { borderWidth: 1, padding: 2 },
   circle: {
     width: circleWidth,
     height: circleWidth,
@@ -122,5 +122,5 @@ const styles = StyleSheet.create({
     marginRight: circleMarginRight,
     backgroundColor: Colors.pink100
   },
-  selectedCircle: {position: 'absolute', backgroundColor: Colors.pink700}
+  selectedCircle: { position: 'absolute', backgroundColor: Colors.pink700 }
 })
