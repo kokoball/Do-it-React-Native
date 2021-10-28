@@ -22,13 +22,6 @@ StyleSheet Color.grey500) 문제 => color 설정 부분 삭제
 https://iancoding.tistory.com/154   //   --save --legacy-peer-deps  추가하기
 
 
-# 참고 사이트
-  
-## 안드로이드
-
-------
-## 서버
-
 
 ------
 
